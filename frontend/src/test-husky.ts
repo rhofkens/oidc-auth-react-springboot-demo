@@ -1,5 +1,5 @@
 // This is a test file to verify that Husky and lint-staged are working correctly
-const testFunction = ( ) => {
+const testFunction = () => {
   console.log('Hello, world!');
 };
 
