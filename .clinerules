@@ -1,0 +1,68 @@
+# CLINERULES – Roo Code Execution Contract
+
+> **These rules are non‑negotiable. Every automated action performed by Roo Code **MUST** comply. Deviation will be treated as a defect.**
+
+---
+
+## 1  Authoritative Source Files
+
+| Priority | File / Folder | Purpose |
+|----------|---------------|---------|
+|1|`docs/PRD/oidc-auth-demo.md`|Canonical functional specification (what to build).|
+|2|`docs/guidelines/architecture.md` & `docs/guidelines/coding-guidelines.md`|How the solution must be architected and coded.|
+|3|`docs/plan/00-high-level-plan.md`|Roadmap overview of all implementation steps.|
+|4|`docs/plan/0X-*.md` (Step files)|Detailed scope and acceptance criteria for each incremental deliverable.|
+
+**Read these files in the order shown before writing any code.**
+
+---
+
+## 2  Execution Flow
+1. **Initialization** – Parse files 1 → 4 and cache relevant directives.
+2. **Iterative Development** – For *each* step file (`01-…`, `02-…`, …):
+   1. Inspect *Scope* and *Acceptance Criteria*.
+   2. Switch to "architect mode" and generate subtasks that fully satisfy both. One level of subtasks is sufficient. Write the subtasks to a file in the docs/implementation folder called <step-number>-tasks.md
+   3. Verify that the subtasks are aligned with docs/architecture.md and docs/coding-guidelines.md.  If not, correct the subtasks until alignment is reached.
+   3. PAUSE and ask the human operator to review and confirm the plan. DO NOT start coding until the operator explicitly approves.
+   4. Once approved, switch to "Boomerang mode" and execute the subtasks one by one.  Implement code, tests, configs, and docs as prescribed in the tasks file.
+   5. Switch to "Code mode" when done.
+   5. Run the complete test suite (`./mvnw test` + `pnpm test`).
+   6. Ensure CI workflow passes locally (`pnpm dlx github-actions-runner ...` not required but mimic).  
+   7. Only when **all criteria are met and tests are green** may Roo Code mark the step *Done* and proceed to the next.
+3. **Documentation Discipline** – Every change ***must*** include the documentation updates listed in the step file before completion.
+
+---
+
+## 3  Coding & Architectural Compliance Checks
+* **Follow** all language, framework, and tooling versions mandated in the architecture and coding‑guidelines documents.
+* **Reject** any transitive dependency or configuration that violates these guidelines.
+* **Lint, format, and coverage gates** are mandatory.
+
+---
+
+## 4  Quality Gates
+| Category | Threshold |
+|----------|-----------|
+|Backend Jacoco coverage|≥ 80 % lines |
+|Frontend Vitest coverage|≥ 80 % lines |
+|ESLint/Spotless|0 errors |
+|CI Workflow|All jobs green |
+
+**If any gate fails, fix immediately before advancing.**
+
+---
+
+## 5  Forbidden Actions
+* Skipping steps or merging multiple steps into one commit.
+* Modifying PRD or guidelines files without explicit human approval.
+* Lowering coverage thresholds or disabling linting.
+
+---
+
+## 6  Success Definition
+Roo Code is successful when, after completing Step 10, **all acceptance criteria across every step are met**, the full CI pipeline passes, and documentation accurately reflects the implemented system.
+
+---
+
+*End of CLINERULES*
+
