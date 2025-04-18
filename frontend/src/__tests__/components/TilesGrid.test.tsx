@@ -7,7 +7,7 @@ describe('TilesGrid Component', () => {
     // Arrange
     const testId1 = 'test-child-1';
     const testId2 = 'test-child-2';
-    
+
     // Act
     render(
       <TilesGrid>
@@ -15,7 +15,7 @@ describe('TilesGrid Component', () => {
         <div data-testid={testId2}>Child 2</div>
       </TilesGrid>
     );
-    
+
     // Assert
     expect(screen.getByTestId(testId1)).toBeInTheDocument();
     expect(screen.getByTestId(testId2)).toBeInTheDocument();
@@ -31,7 +31,7 @@ describe('TilesGrid Component', () => {
         <div>Child 2</div>
       </TilesGrid>
     );
-    
+
     // Assert
     // Find the grid container
     const gridContainer = container.querySelector('.grid');
@@ -47,7 +47,7 @@ describe('TilesGrid Component', () => {
         <div>Child</div>
       </TilesGrid>
     );
-    
+
     // Assert
     const outerContainer = container.firstChild;
     expect(outerContainer).toHaveClass('test-class');

@@ -1,9 +1,9 @@
 /**
  * PrivateTile component for displaying private content.
- * 
+ *
  * This component displays a placeholder message when the user is not authenticated.
  * It uses the shadcn/ui card component for consistent styling with other components.
- * 
+ *
  * @returns A card component displaying the private content placeholder
  */
 import React from 'react';
@@ -11,11 +11,11 @@ import { Card, CardHeader, CardTitle, CardContent } from './ui/card';
 
 /**
  * PrivateTile component that displays a placeholder message for private content
- * 
+ *
  * Shows a static message indicating that the user needs to login to access
  * private content. Uses the same card styling as other tile components for
  * consistency.
- * 
+ *
  * @example
  * ```tsx
  * <PrivateTile />
