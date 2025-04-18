@@ -27,3 +27,5 @@ Thumbs.db
 # Maven Wrapper - Ignore everything in .mvn except the wrapper jar
 .mvn/*
 !.mvn/wrapper/maven-wrapper.jar
+
+.env

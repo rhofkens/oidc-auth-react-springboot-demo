@@ -10,12 +10,12 @@
 * **`.env.example`** at repo root containing placeholders:
   ```dotenv
   # Zitadel OIDC settings
-  ZITADEL_ISSUER_URI=https://issuer.zitadel.ch/oauth/v2
-  ZITADEL_CLIENT_ID=demo-frontend
-  ZITADEL_BACKEND_CLIENT_ID=demo-backend
-  ZITADEL_CLIENT_SECRET=change-me
+  ZITADEL_AUTHDEMO_ISSUER_URI=https://issuer.zitadel.ch/oauth/v2
+  ZITADEL_AUTHDEMO_CLIENT_ID=demo-frontend
+  ZITADEL_AUTHDEMO_BACKEND_CLIENT_ID=demo-backend
+  ZITADEL_AUTHDEMO_CLIENT_SECRET=change-me
   # Optional scopes
-  ZITADEL_SCOPES=openid profile email private.read
+  ZITADEL_AUTHDEMO_SCOPES=openid profile email private.read
   ```
 
 ### Backend (`/backend`)
@@ -27,10 +27,10 @@
       oauth2:
         resourceserver:
           jwt:
-            issuer-uri: ${ZITADEL_ISSUER_URI:}
+            issuer-uri: ${ZITADEL_AUTHDEMO_ISSUER_URI:}
   zitadel:
-    client-id: ${ZITADEL_BACKEND_CLIENT_ID:}
-    client-secret: ${ZITADEL_CLIENT_SECRET:}
+    client-id: ${ZITADEL_AUTHDEMO_BACKEND_CLIENT_ID:}
+    client-secret: ${ZITADEL_AUTHDEMO_CLIENT_SECRET:}
   ```
 * Add Javadoc comment noting that `spring.security.enabled` flag will flip in Step 08.
 
@@ -38,9 +38,9 @@
 * Update `vite.config.ts` to expose variables:
   ```ts
   define: {
-    'import.meta.env.VITE_ZITADEL_ISSUER_URI': JSON.stringify(process.env.ZITADEL_ISSUER_URI),
-    'import.meta.env.VITE_ZITADEL_CLIENT_ID': JSON.stringify(process.env.ZITADEL_CLIENT_ID),
-    'import.meta.env.VITE_ZITADEL_SCOPES': JSON.stringify(process.env.ZITADEL_SCOPES),
+    'import.meta.env.VITE_ZITADEL_AUTHDEMO_ISSUER_URI': JSON.stringify(process.env.ZITADEL_AUTHDEMO_ISSUER_URI),
+    'import.meta.env.VITE_ZITADEL_AUTHDEMO_CLIENT_ID': JSON.stringify(process.env.ZITADEL_AUTHDEMO_CLIENT_ID),
+    'import.meta.env.VITE_ZITADEL_AUTHDEMO_SCOPES': JSON.stringify(process.env.ZITADEL_AUTHDEMO_SCOPES),
   }
   ```
 * Create `frontend/.env.example` mirroring root vars but with `VITE_` prefix.

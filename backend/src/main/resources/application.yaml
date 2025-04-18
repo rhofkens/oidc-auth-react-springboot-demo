@@ -1,0 +1,14 @@
+spring:
+  security:
+    # NOTE: Security is currently disabled. It will be enabled in Step 08.
+    enabled: false
+    oauth2:
+      resourceserver:
+        jwt:
+          # Use environment variable ZITADEL_AUTHDEMO_ISSUER_URI, default to empty string if not set
+          issuer-uri: ${ZITADEL_AUTHDEMO_ISSUER_URI:}
+zitadel:
+  # Use environment variable ZITADEL_AUTHDEMO_BACKEND_CLIENT_ID, default to empty string if not set
+  client-id: ${ZITADEL_AUTHDEMO_BACKEND_CLIENT_ID:}
+  # Use environment variable ZITADEL_AUTHDEMO_CLIENT_SECRET, default to empty string if not set
+  client-secret: ${ZITADEL_AUTHDEMO_CLIENT_SECRET:}

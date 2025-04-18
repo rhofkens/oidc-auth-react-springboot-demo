@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Step 01:** Initial repository scaffold, backend (Spring Boot) and frontend (React/Vite) skeletons, basic toolchain (Maven, pnpm, Vite, ESLint, Prettier, Spotless, Jacoco, Vitest), Husky pre-commit hooks, and GitHub Actions CI pipeline.
 - **Step 02:** Added public health endpoint.
 - **Step 03:** Guest UI skeleton with health fetch.
+- **Step 04:** Baseline error handling added.
+- **Step 05** – Implement client-side caching for public health endpoint using `sessionStorage` to display stale data when the backend is unavailable. Added a 'stale data' badge to the UI.
+- **Step 06** – Added OIDC configuration skeleton (using standard scopes), environment variable setup, and updated gitignore for `.env` files. Updated subsequent step plans (7, 8) to remove custom scope references.
+- **Step 07** – Implemented frontend login/logout flow using oidc-client-ts for PKCE. Added tests for Header, AuthCallback, AuthProvider, and AuthService.
 
 ### Fixed
 

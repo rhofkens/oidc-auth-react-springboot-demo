@@ -40,6 +40,52 @@ The frontend development server will start on http://localhost:5173.
 
 > **Note:** The frontend dev server includes a proxy configuration that forwards all `/api` requests to the backend server running on port 8080. Make sure the backend server is running when developing the frontend.
 
+### Guest Mode Caching
+
+The frontend implements a caching mechanism for the public health check endpoint in guest mode.
+
+- The response from `/api/v1/public/health` is stored in the browser's `sessionStorage`.
+- If the backend is unavailable when the page loads, the UI will display the last known status from the cache ("stale data") instead of showing an error immediately.
+- During development, if you need to clear this cache to fetch fresh data, you can do so via your browser's developer tools (usually under the "Application" or "Storage" tab, look for `sessionStorage`).
+
+## Environment Variables
+
+This project uses environment variables for configuration, particularly for OIDC authentication details needed from Step 7 onwards. Template files are provided:
+
+- `.env.example` (at the project root, for backend configuration)
+- `frontend/.env.example` (in the frontend directory, for frontend configuration)
+
+These files list the required variables but contain placeholder values.
+
+**To configure your local environment:**
+
+1.  **Copy the templates:**
+    ```bash
+    cp .env.example .env
+    cp frontend/.env.example frontend/.env
+    ```
+2.  **Edit the `.env` files:** Open the newly created `.env` files (in the root directory and the `frontend/` directory) and replace the placeholder values with your actual Zitadel application details (Issuer URI, Client IDs, Client Secret). Refer to `docs/auth-config.md` for details on each variable.
+
+**Important:** The `.env` files contain sensitive information and are listed in `.gitignore`. **Never commit `.env` files to the Git repository.**
+
+
+## Running with OIDC
+
+The frontend application uses the OpenID Connect (OIDC) Authorization Code flow with Proof Key for Code Exchange (PKCE) for user authentication. This is implemented using the `oidc-client-ts` library.
+
+To run the application with OIDC authentication enabled, you need to configure the following environment variables in the `frontend/.env` file (refer to `frontend/.env.example` for the format):
+
+- `VITE_ZITADEL_ISSUER_URI`: The URI of your Zitadel instance.
+- `VITE_ZITADEL_CLIENT_ID`: The Client ID of your Zitadel application.
+- `VITE_ZITADEL_SCOPES`: The OIDC scopes required by the application (e.g., `openid profile email`).
+
+Additionally, ensure your Zitadel client application is configured with the following settings:
+
+- **Application Type:** `User Agent`
+- **Authentication Method:** `None` (PKCE is used)
+- **Redirect URIs:** `http://localhost:5173/auth/callback`
+- **Post Logout URIs:** `http://localhost:5173/`
+
 ## Testing
 
 ### Backend
@@ -113,4 +159,3 @@ Example response:
 {
   "message": "Service up"
 }
-```
