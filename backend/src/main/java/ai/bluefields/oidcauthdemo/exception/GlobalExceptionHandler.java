@@ -1,4 +1,4 @@
-package ai.bluefields.oidcauthdemo.error;
+package ai.bluefields.oidcauthdemo.exception;
 
 import java.time.Instant;
 import org.slf4j.Logger;
@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -145,6 +146,30 @@ public class GlobalExceptionHandler {
             Instant.now());
 
     return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
+        .contentType(MediaType.valueOf("application/problem+json"))
+        .body(apiError);
+  }
+
+  /**
+   * Handles {@link AuthorizationDeniedException} (typically thrown by {@code @PreAuthorize}) and
+   * converts it to a standardized {@link ApiError} response with HTTP status 403 (Forbidden).
+   *
+   * @param ex the exception that was thrown
+   * @return a {@link ResponseEntity} containing an {@link ApiError} with status 403
+   */
+  @ExceptionHandler(AuthorizationDeniedException.class)
+  public ResponseEntity<ApiError> handleAuthorizationDenied(AuthorizationDeniedException ex) {
+    logger.warn("Authorization denied: {}", ex.getMessage());
+
+    ApiError apiError =
+        new ApiError(
+            "https://api.bluefields.ai/errors/forbidden",
+            "Forbidden",
+            HttpStatus.FORBIDDEN.value(),
+            "Access to the requested resource is forbidden",
+            Instant.now());
+
+    return ResponseEntity.status(HttpStatus.FORBIDDEN)
         .contentType(MediaType.valueOf("application/problem+json"))
         .body(apiError);
   }

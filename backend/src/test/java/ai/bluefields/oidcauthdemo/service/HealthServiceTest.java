@@ -1,8 +1,10 @@
-package ai.bluefields.oidcauthdemo.health;
+package ai.bluefields.oidcauthdemo.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import ai.bluefields.oidcauthdemo.dto.HealthResponse;
+// Added missing import
 import org.junit.jupiter.api.Test;
 
 /** Unit tests for the HealthService class. */

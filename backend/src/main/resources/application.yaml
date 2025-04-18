@@ -1,12 +1,20 @@
 spring:
+  application:
+    name: oidc-auth-demo
+  mvc:
+    # Enable throwing NoHandlerFoundException for 404 errors
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
   security:
-    # NOTE: Security is currently disabled. It will be enabled in Step 08.
-    enabled: false
+    # NOTE: Security is now enabled as per Step 08.
+    enabled: true
     oauth2:
       resourceserver:
         jwt:
-          # Use environment variable ZITADEL_AUTHDEMO_ISSUER_URI, default to empty string if not set
-          issuer-uri: ${ZITADEL_AUTHDEMO_ISSUER_URI:}
+          # Use environment variable ZITADEL_AUTHDEMO_ISSUER_URI, default to placeholder if not set (REQUIRED for startup!)
+          issuer-uri: ${ZITADEL_AUTHDEMO_ISSUER_URI:https://placeholder-issuer.example.com}
 zitadel:
   # Use environment variable ZITADEL_AUTHDEMO_BACKEND_CLIENT_ID, default to empty string if not set
   client-id: ${ZITADEL_AUTHDEMO_BACKEND_CLIENT_ID:}

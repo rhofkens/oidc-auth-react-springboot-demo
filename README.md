@@ -159,3 +159,21 @@ Example response:
 {
   "message": "Service up"
 }
+
+### Testing Private Endpoint
+
+To test the private endpoint, you need a valid JWT access token obtained from your OIDC provider (e.g., Zitadel). This token must contain the necessary claims or roles (like `AUTH_USER`) that the backend expects.
+
+```bash
+# Replace <your_jwt_token> with a valid access token
+curl -H "Authorization: Bearer <your_jwt_token>" http://localhost:8080/api/v1/private/info
+```
+
+Example response (if authorized):
+```json
+{
+  "info": "This is private information for authenticated users."
+}
+```
+
+You can obtain a test token from the Zitadel console or by using an OIDC client tool after authenticating.

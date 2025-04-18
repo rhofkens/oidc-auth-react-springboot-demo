@@ -1,5 +1,6 @@
-package ai.bluefields.oidcauthdemo.health;
+package ai.bluefields.oidcauthdemo.service;
 
+import ai.bluefields.oidcauthdemo.dto.HealthResponse; // Import the DTO
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,9 +13,9 @@ public class HealthService {
   /**
    * Retrieves the current health status of the service.
    *
-   * @return A HealthResponse object containing a status message
+   * @return A HealthResponse DTO containing a status message
    */
-  public HealthResponse getStatus() {
-    return new HealthResponse("Service up");
+  public HealthResponse getStatus() { // Return type is now the DTO
+    return new HealthResponse("Service up"); // Return the DTO
   }
 }

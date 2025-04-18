@@ -1,4 +1,4 @@
-package ai.bluefields.oidcauthdemo.error;
+package ai.bluefields.oidcauthdemo.exception;
 
 import java.time.Instant;
 

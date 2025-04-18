@@ -1,7 +1,7 @@
-package ai.bluefields.oidcauthdemo;
+package ai.bluefields.oidcauthdemo.controller;
 
-import ai.bluefields.oidcauthdemo.health.HealthResponse;
-import ai.bluefields.oidcauthdemo.health.HealthService;
+import ai.bluefields.oidcauthdemo.dto.HealthResponse; // Updated import
+import ai.bluefields.oidcauthdemo.service.HealthService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
