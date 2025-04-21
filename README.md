@@ -1,6 +1,11 @@
 # AI-Developed OIDC Auth Demo (React + Spring Boot)
 
 [![CI](https://github.com/rhofkens/oidc-auth-react-springboot-demo/actions/workflows/ci.yml/badge.svg)](https://github.com/rhofkens/oidc-auth-react-springboot-demo/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=flat&logo=react&logoColor=%2361DAFB)
+![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=flat&logo=spring&logoColor=white)
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=flat&logo=openjdk&logoColor=white)
+![TypeScript](https://img.shields.io/badge/typescript-%233178C6.svg?style=flat&logo=typescript&logoColor=white)
 
 ## What This Project Does
 
@@ -201,9 +206,10 @@ curl -H "Authorization: Bearer <your_jwt_token>" http://localhost:8080/api/v1/pr
 Example response (if authorized):
 ```json
 {
-  "info": "This is private information for authenticated users.",
-  "email": "user@example.com" 
+  "message": "Hello John Doe (from UserInfo)",
+  "email": "user@example.com"
 }
 ```
+*Note: The actual message will contain the first and last name retrieved from the OIDC provider's UserInfo endpoint.*
 
 You can obtain a test token by logging into the frontend application, which stores the access token. You can inspect network requests or use browser developer tools to find the token.
