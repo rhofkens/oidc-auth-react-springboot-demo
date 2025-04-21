@@ -94,6 +94,23 @@ The hook automatically handles:
 - Problem JSON parsing
 - Error message formatting for user display
 
+
+### Handling Errors from Protected Endpoints (`/api/v1/private/info`)
+
+When accessing protected endpoints like `/api/v1/private/info` (used by the `PrivateTile`), the `useFetch` hook leverages the `fetchWithAuth` utility internally. This utility automatically includes the necessary authentication token (JWT) in the request headers.
+
+Error handling for these requests follows the standard flow:
+
+1.  **Authentication Errors (401 Unauthorized / 403 Forbidden):** If the user is not authenticated, the token is invalid/expired, or lacks the required permissions, the backend will return a 401 or 403 status code.
+2.  **Network/Server Errors:** Standard network issues or backend server errors (e.g., 5xx) can also occur.
+3.  **Error Capture:** The `useFetch` hook captures these errors (both HTTP errors and network errors).
+4.  **Problem Details Parsing:** If the backend returns an `application/problem+json` response (standard for 4xx/5xx errors), `useFetch` parses it to extract a meaningful error message.
+5.  **Global Display:** By default (`updateErrorStore: true`), the extracted or generated error message is pushed to the `useErrorStore`.
+6.  **User Notification:** The `ErrorBanner` component subscribes to the store and displays the error message globally.
+7.  **Component State:** The `PrivateTile` component, using the `useFetch` hook, will receive the error state. It might display a generic message like "Could not load private data" when `error` is present.
+
+This ensures that authentication/authorization issues and other problems accessing protected resources are consistently reported to the user via the global error banner, while the specific component can react to the error state appropriately.
+
 ### ErrorBanner Component
 
 The `ErrorBanner` component displays error messages from the error store in a fixed-position alert at the top of the page. It uses:

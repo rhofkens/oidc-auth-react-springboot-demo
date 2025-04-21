@@ -1,3 +1,10 @@
+# Revert logging levels back to default or INFO/WARN as needed
+logging:
+  level:
+    org.springframework.security: TRACE
+    org.springframework.security.oauth2: TRACE
+    com.nimbusds.jose: TRACE
+
 spring:
   application:
     name: oidc-auth-demo
@@ -15,6 +22,11 @@ spring:
         jwt:
           # Use environment variable ZITADEL_AUTHDEMO_ISSUER_URI, default to placeholder if not set (REQUIRED for startup!)
           issuer-uri: ${ZITADEL_AUTHDEMO_ISSUER_URI:https://placeholder-issuer.example.com}
+          # Explicitly define the expected audience(s) for this resource server.
+          # This value should match one of the 'aud' claims in the JWT.
+          # Using the likely backend API client ID from the token provided earlier.
+          # Alternatively, could use ZITADEL_AUTHDEMO_BACKEND_CLIENT_ID if that env var is reliably set.
+          audience: 316198720267949194
 zitadel:
   # Use environment variable ZITADEL_AUTHDEMO_BACKEND_CLIENT_ID, default to empty string if not set
   client-id: ${ZITADEL_AUTHDEMO_BACKEND_CLIENT_ID:}

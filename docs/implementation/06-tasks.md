@@ -165,8 +165,7 @@ Based on `docs/plan/06-oidc-configuration-skeleton.md`, `docs/guidelines/archite
 5.  **Task 6.5: Documentation Updates (This Step)**
     *   Create the file `docs/auth-config.md`. Populate it with explanations for each OIDC environment variable (`ZITADEL_AUTHDEMO_ISSUER_URI`, `ZITADEL_AUTHDEMO_CLIENT_ID`, `ZITADEL_AUTHDEMO_BACKEND_CLIENT_ID`, `ZITADEL_AUTHDEMO_CLIENT_SECRET`, `ZITADEL_AUTHDEMO_SCOPES`), instructions on where to find these values in a Zitadel project, and mention which steps will utilize them (primarily 7-10). Remove references to the `private.read` scope and explain that authorization will rely on standard claims/roles. Also add a note emphasizing that `.env` files should *not* be committed.
     *   Update `README.md`: Add a new section titled "## Environment Variables" explaining the purpose of `.env.example` and instructing users to copy it to `.env` and populate it with their Zitadel details for local development involving authentication features (Steps 7+). Explicitly mention that `.env` is ignored by Git and should not be committed. Remove mention of the `private.read` scope if present in previous drafts.
-    *   Update `CHANGELOG.md`: Add an entry under the relevant version/date: `### Added\n- **Step 06** – Added OIDC configuration skeleton (using standard scopes), environment variable setup, and updated gitignore for `.env` files. 
-    * Update subsequent step plans (7, 8) to remove custom scope references.`.
+    *   Update `CHANGELOG.md`: Add an entry under the relevant version/date: `### Added\n- **Step 06** – Added OIDC configuration skeleton (using standard scopes), environment variable setup, and updated gitignore for `.env` files. Updated subsequent step plans (7, 8) to remove custom scope references.`.
 
 6.  **Task 6.6: Update Future Step Plans (Steps 7 & 8)**
     *   Read `docs/plan/07-frontend-login-logout-flow.md`.

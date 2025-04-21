@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Step 06** – Added OIDC configuration skeleton (using standard scopes), environment variable setup, and updated gitignore for `.env` files. Updated subsequent step plans (7, 8) to remove custom scope references.
 - **Step 07** – Implemented frontend login/logout flow using oidc-client-ts for PKCE. Added tests for Header, AuthCallback, AuthProvider, and AuthService.
 - **Step 08** – Added private endpoint and JWT validation.
+- **Step 09** – Protected Tile B consumes private endpoint, fetching user-specific data when authenticated.
 
 ### Fixed
 
