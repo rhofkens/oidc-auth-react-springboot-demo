@@ -53,17 +53,32 @@ public class PrivateInfoService {
         .bodyToMono(Map.class) // Assuming response is a JSON object
         .map(
             userInfoMap -> {
-              // Extract email, handle potential null or incorrect type
+              // Extract claims, handle potential null or incorrect type
               Object emailObj = userInfoMap.get("email");
               String email = (emailObj instanceof String) ? (String) emailObj : "Email not found";
-              return new PrivateInfoResponse("Hello AUTH (from UserInfo)", email);
+
+              Object givenNameObj = userInfoMap.get("given_name");
+              String givenName = (givenNameObj instanceof String) ? (String) givenNameObj : "User";
+
+              Object familyNameObj = userInfoMap.get("family_name");
+              String familyName =
+                  (familyNameObj instanceof String)
+                      ? (String) familyNameObj
+                      : ""; // Default to empty if missing
+
+              // Construct message carefully to avoid double spaces if familyName is empty
+              String fullName = givenName + (familyName.isEmpty() ? "" : " " + familyName);
+              String message = String.format("Hello %s (from UserInfo)", fullName.trim());
+
+              return new PrivateInfoResponse(message, email);
             })
         .onErrorResume(
             error -> {
               // Log the error appropriately in a real application
               System.err.println("Error fetching UserInfo: " + error.getMessage());
               return Mono.just(
-                  new PrivateInfoResponse("Hello AUTH (UserInfo Error)", "Error fetching email"));
+                  new PrivateInfoResponse(
+                      "Hello User (UserInfo Error)", "Error fetching user details"));
             });
   }
 }

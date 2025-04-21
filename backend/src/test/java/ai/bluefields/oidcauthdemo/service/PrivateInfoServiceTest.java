@@ -66,11 +66,17 @@ class PrivateInfoServiceTest {
   }
 
   @Test
-  void getInfo_shouldReturnResponseWithEmailFromUserInfo_whenSuccessful() {
+  void getInfo_shouldReturnPersonalizedResponse_whenUserInfoSuccessful() {
     // Arrange
     String testEmail = "userinfo@example.com";
+    String testGivenName = "John";
+    String testFamilyName = "Doe";
     String expectedUserInfoUrl = "http://mock-issuer.com/oidc/v1/userinfo";
-    Map<String, Object> userInfoResponseMap = Map.of("email", testEmail);
+    Map<String, Object> userInfoResponseMap =
+        Map.of(
+            "email", testEmail,
+            "given_name", testGivenName,
+            "family_name", testFamilyName);
 
     // Mock the final bodyToMono call for success
     when(responseSpec.bodyToMono(Map.class)).thenReturn(Mono.just(userInfoResponseMap));
@@ -83,7 +89,8 @@ class PrivateInfoServiceTest {
         .assertNext(
             response -> {
               assertThat(response).isNotNull();
-              assertThat(response.message()).isEqualTo("Hello AUTH (from UserInfo)");
+              assertThat(response.message())
+                  .isEqualTo("Hello John Doe (from UserInfo)"); // Updated assertion
               assertThat(response.email()).isEqualTo(testEmail);
             })
         .verifyComplete();
@@ -113,8 +120,10 @@ class PrivateInfoServiceTest {
         .assertNext(
             response -> {
               assertThat(response).isNotNull();
-              assertThat(response.message()).isEqualTo("Hello AUTH (UserInfo Error)");
-              assertThat(response.email()).isEqualTo("Error fetching email");
+              assertThat(response.message())
+                  .isEqualTo("Hello User (UserInfo Error)"); // Updated assertion
+              assertThat(response.email())
+                  .isEqualTo("Error fetching user details"); // Updated assertion
             })
         .verifyComplete(); // onErrorResume handles the error, so the Mono completes
 
@@ -149,11 +158,11 @@ class PrivateInfoServiceTest {
   }
 
   @Test
-  void getInfo_shouldReturnDefaultEmail_whenEmailMissingInUserInfo() {
+  void getInfo_shouldReturnDefaultValues_whenClaimsMissingInUserInfo() { // Renamed test
     // Arrange
-    Map<String, Object> userInfoResponseMap = Collections.emptyMap(); // No email claim
+    Map<String, Object> userInfoResponseMap = Collections.emptyMap(); // No email or name claims
 
-    // Mock the final bodyToMono call for success with missing email
+    // Mock the final bodyToMono call for success with missing claims
     when(responseSpec.bodyToMono(Map.class)).thenReturn(Mono.just(userInfoResponseMap));
 
     // Act
@@ -164,8 +173,9 @@ class PrivateInfoServiceTest {
         .assertNext(
             response -> {
               assertThat(response).isNotNull();
-              assertThat(response.message()).isEqualTo("Hello AUTH (from UserInfo)");
-              assertThat(response.email()).isEqualTo("Email not found"); // Default value
+              assertThat(response.message())
+                  .isEqualTo("Hello User (from UserInfo)"); // Updated assertion for default message
+              assertThat(response.email()).isEqualTo("Email not found"); // Default email value
             })
         .verifyComplete();
   }
