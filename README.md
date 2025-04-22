@@ -86,23 +86,42 @@ The frontend implements a caching mechanism for the public health check endpoint
 
 ## Environment Variables
 
-This project uses environment variables for configuration, particularly for OIDC authentication details. Template files are provided:
+This project uses environment variables for configuration, particularly for OIDC authentication details.
 
-- `.env.example` (at the project root, for backend configuration)
-- `frontend/.env.example` (in the frontend directory, for frontend configuration)
+**Frontend Configuration (Vite):**
 
-These files list the required variables but contain placeholder values.
+- The frontend uses a standard `.env` file located at `frontend/.env`.
+- A template file `frontend/.env.example` lists the required variables (like `VITE_ZITADEL_ISSUER_URI`, `VITE_ZITADEL_CLIENT_ID`).
+- **To configure:**
+    1. Copy `frontend/.env.example` to `frontend/.env`.
+    2. Edit `frontend/.env` with your actual Zitadel **frontend** application details.
 
-**To configure your local environment:**
+**Backend Configuration (Spring Boot):**
 
-1.  **Copy the templates:**
-    ```bash
-    cp .env.example .env
-    cp frontend/.env.example frontend/.env
-    ```
-2.  **Edit the `.env` files:** Open the newly created `.env` files (in the root directory and the `frontend/` directory) and replace the placeholder values with your actual Zitadel application details (Issuer URI, Client IDs, Client Secret). Refer to `docs/auth-config.md` for details on each variable.
+- The backend reads configuration from **actual environment variables** set in your system or terminal session. It **does not** automatically read from `.env` files.
+- The `.env.example` file in the project root serves as a **template** listing the variables the backend expects (like `ZITADEL_AUTHDEMO_ISSUER_URI`, `ZITADEL_AUTHDEMO_BACKEND_CLIENT_ID`, `ZITADEL_AUTHDEMO_CLIENT_SECRET`).
+- **To configure:**
+    1. Refer to `.env.example` for the required variable names.
+    2. Set these variables in your environment *before* launching the backend. Examples:
+        *   **Linux/macOS (bash/zsh):**
+            ```bash
+            export ZITADEL_AUTHDEMO_ISSUER_URI="https://your-issuer..."
+            export ZITADEL_AUTHDEMO_BACKEND_CLIENT_ID="your-backend-id"
+            export ZITADEL_AUTHDEMO_CLIENT_SECRET="your-secret"
+            cd backend
+            ./mvnw spring-boot:run
+            ```
+        *   **Windows (PowerShell):**
+            ```powershell
+            $env:ZITADEL_AUTHDEMO_ISSUER_URI="https://your-issuer..."
+            $env:ZITADEL_AUTHDEMO_BACKEND_CLIENT_ID="your-backend-id"
+            $env:ZITADEL_AUTHDEMO_CLIENT_SECRET="your-secret"
+            cd backend
+            ./mvnw spring-boot:run
+            ```
+    3. Alternatively, configure them via your IDE's run configuration settings.
 
-**Important:** The `.env` files contain sensitive information and are listed in `.gitignore`. **Never commit `.env` files to the Git repository.**
+**Important:** Environment variables (especially secrets like `ZITADEL_AUTHDEMO_CLIENT_SECRET`) should be handled securely. The `.env` files are listed in `.gitignore` and should **never be committed** to the repository.
 
 
 ## Running with OIDC
